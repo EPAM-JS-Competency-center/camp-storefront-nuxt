@@ -1,0 +1,200 @@
+[
+    {
+        "id": "2",
+        "name": "Default Category",
+        "description": "Default Category",
+        "slug": "2",
+        "ancestors": []
+    },
+    {
+        "id": "20",
+        "name": "Women",
+        "description": "Women",
+        "slug": "20",
+        "parent": {
+            "id": "2"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            }
+        ]
+    },
+    {
+        "id": "21",
+        "name": "Tops",
+        "description": "Tops",
+        "slug": "21",
+        "parent": {
+            "id": "20"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            }
+        ]
+    },
+    {
+        "id": "23",
+        "name": "Jackets",
+        "description": "Jackets",
+        "slug": "23",
+        "parent": {
+            "id": "21"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "21"
+            }
+        ]
+    },
+    {
+        "id": "24",
+        "name": "Hoodies & Sweatshirts",
+        "description": "Hoodies & Sweatshirts",
+        "slug": "24",
+        "parent": {
+            "id": "21"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "21"
+            }
+        ]
+    },
+    {
+        "id": "25",
+        "name": "Tees",
+        "description": "Tees",
+        "slug": "25",
+        "parent": {
+            "id": "21"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "21"
+            }
+        ]
+    },
+    {
+        "id": "26",
+        "name": "Bras & Tanks",
+        "description": "Bras & Tanks",
+        "slug": "26",
+        "parent": {
+            "id": "21"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "21"
+            }
+        ]
+    },
+    {
+        "id": "22",
+        "name": "Bottoms",
+        "description": "Bottoms",
+        "slug": "22",
+        "parent": {
+            "id": "20"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            }
+        ]
+    },
+    {
+        "id": "27",
+        "name": "Pants",
+        "description": "Pants",
+        "slug": "27",
+        "parent": {
+            "id": "22"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "22"
+            }
+        ]
+    },
+    {
+        "id": "28",
+        "name": "Shorts",
+        "description": "Shorts",
+        "slug": "28",
+        "parent": {
+            "id": "22"
+        },
+        "ancestors": [
+            {
+                "type": "category",
+                "id": "2"
+            },
+            {
+                "type": "category",
+                "id": "20"
+            },
+            {
+                "type": "category",
+                "id": "22"
+            }
+        ]
+    }
+]

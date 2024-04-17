@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ring-primary-700 {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(var(--colors-primary-700)/var(--tw-ring-opacity));
+}
+
+.scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        @apply hidden /* for Chrome, Safari, and Opera */;
+    }
+}
+
+.right-4 {
+    right: 1rem
+}
+
+.top-1\/3 {
+    top: 33.333333%
+}
+
+.-translate-y-0\.5,.-translate-y-1 {
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.-translate-y-1 {
+    --tw-translate-y: -0.25rem
+}
+
+.-translate-y-1\/2 {
+    --tw-translate-y: -50%
+}
+
+.-translate-y-1\/2,.translate-x-0 {
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.flex-grow {
+    flex-grow: 1
+}
+
+.flex-grow-0 {
+    flex-grow: 0
+}
+
+.flex-grow-\[2\] {
+    flex-grow: 2
+}
+
+.grow {
+    flex-grow: 1
+}
+
+.basis-0 {
+    flex-basis: 0px
+}
+
+.basis-2\/4 {
+    flex-basis: 50%
+}
+
+.basis-auto {
+    flex-basis: auto
+}
+
+.basis-full {
+    flex-basis: 100%
+}
+
+.pending-implementation {
+    background: #ff000036;
+}

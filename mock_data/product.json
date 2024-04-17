@@ -1,0 +1,358 @@
+{
+    "id": "1220",
+    "name": "Stellar Solar Jacket",
+    "description": "<p>Beat the heat and protect yourself from sunrays with the Stellar Solar Jacket. It's loaded with all the engineered features you need for an intense, safe outdoor workout: 100% UV protection, a breathable perforated construction, and advanced moisture-wicking technology.</p>\n<p>&bull; Loose fit. <br />&bull; Reflectivity. <br />&bull; Flat seams. <br />&bull; Machine wash/dry.<br />&bull; Deep pink jacket with front panel rouching</p>",
+    "slug": "stellar-solar-jacket",
+    "variants": [
+        {
+            "id": "1211",
+            "sku": "WJ01-S-Blue",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-blue_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "50",
+                        "label": "Blue"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "167",
+                        "label": "S"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-s-blue",
+            "name": "Stellar Solar Jacket-S-Blue"
+        },
+        {
+            "id": "1212",
+            "sku": "WJ01-S-Red",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-red_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "58",
+                        "label": "Red"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "167",
+                        "label": "S"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-s-red",
+            "name": "Stellar Solar Jacket-S-Red"
+        },
+        {
+            "id": "1213",
+            "sku": "WJ01-S-Yellow",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-yellow_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "60",
+                        "label": "Yellow"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "167",
+                        "label": "S"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-s-yellow",
+            "name": "Stellar Solar Jacket-S-Yellow"
+        },
+        {
+            "id": "1214",
+            "sku": "WJ01-M-Blue",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-blue_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "50",
+                        "label": "Blue"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "168",
+                        "label": "M"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-m-blue",
+            "name": "Stellar Solar Jacket-M-Blue"
+        },
+        {
+            "id": "1215",
+            "sku": "WJ01-M-Red",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-red_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "58",
+                        "label": "Red"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "168",
+                        "label": "M"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-m-red",
+            "name": "Stellar Solar Jacket-M-Red"
+        },
+        {
+            "id": "1216",
+            "sku": "WJ01-M-Yellow",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-yellow_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "60",
+                        "label": "Yellow"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "168",
+                        "label": "M"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-m-yellow",
+            "name": "Stellar Solar Jacket-M-Yellow"
+        },
+        {
+            "id": "1217",
+            "sku": "WJ01-L-Blue",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-blue_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "50",
+                        "label": "Blue"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "169",
+                        "label": "L"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-l-blue",
+            "name": "Stellar Solar Jacket-L-Blue"
+        },
+        {
+            "id": "1218",
+            "sku": "WJ01-L-Red",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-red_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "58",
+                        "label": "Red"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "169",
+                        "label": "L"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-l-red",
+            "name": "Stellar Solar Jacket-L-Red"
+        },
+        {
+            "id": "1219",
+            "sku": "WJ01-L-Yellow",
+            "prices": [
+                {
+                    "value": {
+                        "currencyCode": "USD",
+                        "centAmount": 7500
+                    }
+                }
+            ],
+            "images": [
+                {
+                    "url": "/assets/images/products/wj01-yellow_main_1.jpg"
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "Color",
+                    "value": {
+                        "key": "60",
+                        "label": "Yellow"
+                    }
+                },
+                {
+                    "name": "Size",
+                    "value": {
+                        "key": "169",
+                        "label": "L"
+                    }
+                }
+            ],
+            "slug": "stellar-solar-jacket-l-yellow",
+            "name": "Stellar Solar Jacket-L-Yellow"
+        }
+    ],
+    "masterVariant": {
+        "id": "1211",
+        "sku": "WJ01-S-Blue",
+        "prices": [
+            {
+                "value": {
+                    "currencyCode": "USD",
+                    "centAmount": 7500
+                }
+            }
+        ],
+        "images": [
+            {
+                "url": "/assets/images/products/wj01-blue_main_1.jpg"
+            }
+        ],
+        "attributes": [
+            {
+                "name": "Color",
+                "value": {
+                    "key": "50",
+                    "label": "Blue"
+                }
+            },
+            {
+                "name": "Size",
+                "value": {
+                    "key": "167",
+                    "label": "S"
+                }
+            }
+        ],
+        "slug": "stellar-solar-jacket-s-blue",
+        "name": "Stellar Solar Jacket-S-Blue"
+    }
+}
