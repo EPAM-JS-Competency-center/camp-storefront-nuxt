@@ -1,4 +1,9 @@
 <template>
+  <ProductPromos
+    v-if="!isLoading && productSku"
+    :sku="productSku"
+  >
+  </ProductPromos>
   <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page"
     :class="{'pending-implementation': pdpIsMocked}"
   >
@@ -97,6 +102,7 @@
   import { SfChip, SfListItem, SfThumbnail } from '@storefront-ui/vue'
   import ProductGallery from '~/components/products/ProductGallery.vue'
   import ProductCartDetails from '~/components/products/ProductCartDetails.vue'
+  import ProductPromos from '~/components/products/ProductPromos.vue'
   import type ProductAttributeDTO from '~/DTO/ProductAttribute'
   import type ProductVariantDTO from '~/DTO/ProductVariant'
 
@@ -105,6 +111,7 @@
   }>()
 
   const router = useRouter()
+  const route = useRoute()
 
   const productStore = useProductStore()
   const selectedSize = ref<ProductAttributeDTO | null>(null)
@@ -192,4 +199,5 @@
   }
 
   const pdpIsMocked = computed(() => productStore.pdpIsMocked)
+  const productSku = computed(() => route.params.sku as string)
 </script>
