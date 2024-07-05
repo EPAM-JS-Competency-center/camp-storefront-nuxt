@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="type === 'success'" role="alert"
+        <div v-if="type === ALERT_TYPE.SUCCESS" role="alert"
             class="flex items-start md:items-center max-w-[600px] shadow-md bg-positive-100 pr-2 pl-4 ring-1 ring-positive-200 typography-text-sm md:typography-text-base py-1 rounded-md">
             <SfIconCheckCircle class="my-2 mr-2 text-positive-700 shrink-0" />
             <p class="py-2 mr-2">
@@ -13,7 +13,7 @@
                 <SfIconClose size="sm" class="block md:hidden" @click="remove" />
             </button>
         </div>
-        <div v-if="type === 'error'" role="alert"
+        <div v-if="type === ALERT_TYPE.ERROR" role="alert"
             class="flex items-start md:items-center max-w-[600px] shadow-md bg-negative-100 pr-2 pl-4 ring-1 ring-negative-300 typography-text-sm md:typography-text-base py-1 rounded-md">
             <p class="py-2 mr-2">
                 {{ message }}
@@ -30,15 +30,16 @@
 <script lang="ts" setup>
 import { SfIconCheckCircle, SfIconClose } from '@storefront-ui/vue'
 import { defineProps } from 'vue'
-import { useAlerts } from '~/stores'
+import { useAlertsStore } from '~/stores'
+import { ALERT_TYPE } from '~/types/enums'
 
 const props = defineProps<{
     message: string
-    type: string
+    type: ALERT_TYPE
     index: number
 }>()
 
-const { removeAlert } = useAlerts()
+const { removeAlert } = useAlertsStore()
 
 function remove() {
     removeAlert(props.index)

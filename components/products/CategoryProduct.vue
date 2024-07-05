@@ -28,11 +28,16 @@
         <SfRating size="xs" class="text-warning-500" :value="3" :max="5" />
 
         <SfLink :href="productLink" variant="secondary" class="pl-1 no-underline">
-          <SfCounter size="xs"> 123 </SfCounter>
+          <SfCounter size="xs">
+123
+</SfCounter>
         </SfLink>
       </div>
       <span v-if="product.masterVariant" class="block pb-2 font-bold typography-text-lg">{{
-        centsToDollars(product.masterVariant.price.centAmount)
+        formatCurrency(
+          product.masterVariant.price.centAmount,
+          product.masterVariant.price.currencyCode
+        )
       }}</span>
       <SfButton size="sm" @click="addToCart">
         <template #prefix>
@@ -53,19 +58,20 @@
     SfIconShoppingCart,
     SfIconFavorite,
   } from '@storefront-ui/vue'
-  import { centsToDollars } from '~/utils/helpers'
+  import { formatCurrency } from '~/utils/helpers'
   import ProductDTO from '~/DTO/Product'
-  import { useCart, useAlerts } from '~/stores'
+  import { useCartStore, useAlertsStore } from '~/stores'
+  import { ALERT_TYPE } from '~/types/enums'
 
   const props = defineProps<{ product: ProductDTO }>()
 
   const productLink = computed(() => `/products/${props.product.masterVariant.sku}`)
 
-  const { addAlert } = useAlerts()
-  const cartStore = useCart()
+  const { addAlert } = useAlertsStore()
+  const cartStore = useCartStore()
 
   async function addToCart() {
     await cartStore.addProductToCart(props.product.masterVariant.sku, 1)
-    addAlert({ message: 'Product added to cart', type: 'success' })
+    addAlert({ message: 'Product added to cart', type: ALERT_TYPE.SUCCESS })
   }
 </script>

@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia'
+import { ALERT_TYPE } from '~/types/enums'
+
+interface Alert {
+  message: string
+  type: ALERT_TYPE
+}
 
 interface State {
-  alerts: {
-    message: string
-    type: string
-  }[]
+  alerts: Alert[]
 }
 
 export default defineStore('alerts', {
@@ -12,7 +15,7 @@ export default defineStore('alerts', {
     alerts: [],
   }),
   actions: {
-    addAlert(alert: { message: string; type: string }): void {
+    addAlert(alert: Alert): void {
       this.alerts.push(alert)
     },
     removeAlert(index: number): void {

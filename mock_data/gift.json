@@ -1,0 +1,35 @@
+{
+  "id": "1237",
+  "sku": "WJ03-XS-Blue",
+  "prices": [
+    {
+      "value": {
+        "currencyCode": "USD",
+        "centAmount": 5700
+      }
+    }
+  ],
+  "images": [
+    {
+      "url": "/assets/images/products/wj03-blue_main_1.jpg"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "Color",
+      "value": {
+        "key": "50",
+        "label": "Blue"
+      }
+    },
+    {
+      "name": "Size",
+      "value": {
+        "key": "166",
+        "label": "XS"
+      }
+    }
+  ],
+  "slug": "augusta-pullover-jacket-xs-blue",
+  "name": "Augusta Pullover Jacket-XS-Blue"
+}
