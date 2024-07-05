@@ -1,8 +1,8 @@
 import { getStorage } from './localStorage'
-import type { CartLineItemsInner, Price } from '~/types/interfaces'
+import type { Cart, CartLineItemsInner, Price } from '~/types/interfaces'
 import singleProductData from '@/mock_data/product.json'
 
-export function createCart() {
+export function createCart(): Cart {
     const mockedCart = {
         id: 'mocked-cart-id',
         version: 0,
@@ -12,7 +12,13 @@ export function createCart() {
             currencyCode: 'USD',
             centAmount: 0
         },
-        totalQuantity: 0
+        totalQuantity: 0,
+        cartDiscounts: {
+            discountAmount: {
+                currencyCode: 'USD',
+                centAmount: 222,
+            }
+        }
     }
 
     getStorage().setItem('mocked-cart-mocked-cart-id', JSON.stringify(mockedCart))

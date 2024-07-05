@@ -74,7 +74,9 @@
         <summary
           class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center list-none [&amp;::-webkit-details-marker]:hidden cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:outline focus-visible:rounded-sm"
         >
-          <h2 class="typography-headline-4 md:typography-headline-3 font-bold">Product Details</h2>
+          <h2 class="typography-headline-4 md:typography-headline-3 font-bold">
+Product Details
+</h2>
           <svg
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"

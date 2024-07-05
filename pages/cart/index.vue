@@ -44,14 +44,14 @@
 <script setup lang="ts">
 import CartProduct from '~/components/products/CartProduct.vue'
 import CartSummary from '~/components/CartSummary.vue'
-import { useCart } from '@/stores'
+import { useCartStore } from '@/stores'
 
-const cartStore = useCart()
+const cartStore = useCartStore()
 
 const cart = computed(() => cartStore.cart)
 
-onBeforeMount(async () => {
-  await cartStore.loadCart()
+onBeforeMount(() => {
+  cartStore.loadCart()
 })
 
 definePageMeta({
