@@ -15,7 +15,7 @@
 <script setup lang="ts">
   import DefaultHeader from '~/components/headers/DefaultHeader.vue'
   import Alert from '~/components/alerts/Alert.vue'
-  import { useAlerts } from '~/stores'
+  import { useAlertsStore } from '~/stores'
 
-  const { alerts } = useAlerts()
+  const { alerts } = useAlertsStore()
 </script>

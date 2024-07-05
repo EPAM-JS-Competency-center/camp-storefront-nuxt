@@ -33,19 +33,25 @@
           </div>
         </div>
 
-        <div v-if="promoCode && showPromocode" class="flex items-center mb-5 py-5 border-y border-neutral-200">
-          <p>PromoCode</p>
-          <SfButton size="sm" variant="tertiary" class="ml-auto mr-2" @click="removePromoCode">
+        <div v-if="orderDetails.promoCode && orderDetails.discountedAmount" class="flex items-center mb-5 py-5 border-y border-neutral-200">
+          <p>Promo Code Applied</p>
+          <SfButton size="sm" variant="tertiary" class="ml-auto" @click="removePromoCode">
             Remove
           </SfButton>
-          <p>{{ formatPrice(promoCode) }}</p>
         </div>
-        <form v-if="!promoCode && showPromocode" class="flex gap-x-2 py-4 border-y border-neutral-200 mb-4" @submit.prevent="checkPromoCode">
-          <SfInput v-model="inputValue" placeholder="Enter Promo Code" wrapper-class="grow" />
-          <SfButton type="submit" variant="secondary">
+        <form v-else-if="!orderDetails.promoCode" class="flex gap-x-2 py-4 border-y border-neutral-200 mb-4" @submit.prevent="getDiscountByPromoCode">
+          <SfInput v-model="promoCode" placeholder="Enter Promo Code" wrapper-class="grow" />
+          <SfButton type="button" variant="secondary" @click="getDiscountByPromoCode">
             Apply
           </SfButton>
         </form>
+        <div
+          v-if="orderDetails.discountedAmount > 0"
+          class="flex justify-between pb-4 mb-4 border-b border-neutral-200"
+        >
+          <p>Discount</p>
+          <p>{{ formatPrice(orderDetails.discountedAmount) }}</p>
+        </div>
         <div
           class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4 border-b border-neutral-200">
           <p>Total</p>
@@ -104,55 +110,64 @@ import { ref, computed } from 'vue'
 import { SfButton, SfInput, SfIconClose, SfIconCheckCircle } from '@storefront-ui/vue'
 import type { Cart } from '~/types/interfaces'
 import SfButtonLink from '~/components/base/SfButtonLink.vue'
+import { useAlertsStore, useCartStore } from '~/stores'
+import { ALERT_TYPE } from '~/types/enums'
 
 const props = defineProps<{
   cart: Cart
 }>()
 
-const inputValue = ref('')
+const cartStore = useCartStore()
+const alertsStore = useAlertsStore()
+
+const promoCode = ref('')
 const showRemovedCodeAlert = ref(false)
 const showAddedCodeAlert = ref(false)
 const showErrorAlert = ref(false)
 
-const showPromocode = ref(false)
-
 const orderDetails = computed(() => ({
   items: props.cart.lineItems?.length || 0,
-  originalPrice: (props.cart.totalPrice?.centAmount || 0) / 100,
+  originalPrice: (props.cart.lineItems?.reduce((sum, item) => (item.totalPrice || 0) + sum, 0) || 0) / 100,
   delivery: 0.0,
   tax: 0,
+  discountedAmount: (props.cart.discountOnTotalPrice?.discountedAmount?.centAmount || 0) / 100,
+  promoCode: props.cart.discountCodes?.[0]?.discountCode?.id
 }))
-
-const promoCode = ref(0)
 
 const itemsSubtotal = computed(
   () => (props.cart.totalPrice?.centAmount || 0) / 100
 )
 
-const totalPrice = computed(() => itemsSubtotal.value + promoCode.value)
+const totalPrice = computed(() => itemsSubtotal.value)
 
-const checkPromoCode = () => {
-  if (
-    (promoCode.value === -100 && inputValue.value.toUpperCase() === 'VSF2020') ||
-    !inputValue.value
-  ) {
-    return
-  }
-  if (inputValue.value.toUpperCase() === 'VSF2020') {
-    promoCode.value = -100
-    showAddedCodeAlert.value = true
-    setTimeout(() => (showAddedCodeAlert.value = false), 5000)
-  } else {
-    showErrorAlert.value = true
-    setTimeout(() => (showErrorAlert.value = false), 5000)
+const removePromoCode = async () => {
+  try {
+    await cartStore.removePromoCodeFromCart()
+
+    showRemovedCodeAlert.value = true
+    setTimeout(() => (showRemovedCodeAlert.value = false), 5000)
+  } catch (e) {
+    alertsStore.addAlert({ message: 'Promo code deletion failed', type: ALERT_TYPE.ERROR })
   }
 }
 
-const removePromoCode = () => {
-  promoCode.value = 0
-  showRemovedCodeAlert.value = true
-  setTimeout(() => (showRemovedCodeAlert.value = false), 5000)
-}
+  const getDiscountByPromoCode = async () => {
+    try {
+      if (!promoCode.value) {
+        return
+      }
+
+      await cartStore.checkPromoCode(promoCode.value)
+      await cartStore.setPromoCodeToCart(promoCode.value)
+    } catch (e) {
+      if (e instanceof Error) {
+        alertsStore.addAlert({
+          message: `The discount code was not found or can not be applied. ${e.message}`,
+          type: ALERT_TYPE.ERROR
+        })
+      }
+    }
+  }
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat(

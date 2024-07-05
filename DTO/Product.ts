@@ -27,8 +27,8 @@ export default class ProductDTO {
     this.sizes = Object.values(
       this.variants.reduce(
         (acc, variant) => {
-          variant.attributes.forEach(attr => {
-            if (attr.name === PRODUCT_ATTRS_NAME.SIZE && attr.key) acc[attr.key] = attr
+          variant.attributes.forEach((attr) => {
+            if (attr.name === PRODUCT_ATTRS_NAME.SIZE && attr.key) { acc[attr.key] = attr }
           })
 
           return acc
@@ -39,8 +39,8 @@ export default class ProductDTO {
     this.colors = Object.values(
       this.variants.reduce(
         (acc, variant) => {
-          variant.attributes.forEach(attr => {
-            if (attr.name === PRODUCT_ATTRS_NAME.COLOR && attr.key) acc[attr.key] = attr
+          variant.attributes.forEach((attr) => {
+            if (attr.name === PRODUCT_ATTRS_NAME.COLOR && attr.key) { acc[attr.key] = attr }
           })
 
           return acc

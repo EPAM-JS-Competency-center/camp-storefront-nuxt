@@ -185,14 +185,14 @@
   import { AdyenCheckout, Card, type CoreConfiguration } from '@adyen/adyen-web'
   import { SfButton, SfModal } from '@storefront-ui/vue'
   import type { Address } from '@/types/interfaces'
-  import { useCart, useAlerts } from '@/stores'
+  import { useCartStore, useAlertsStore } from '@/stores'
   import ShippingAddress from '~/components/ShippingAddress.vue'
-  import { getStorage } from '~/utils/localStorage'
+  import { ALERT_TYPE } from '@/types/enums'
 
   const config = useRuntimeConfig()
 
-  const cartStore = useCart()
-  const { addAlert } = useAlerts()
+  const cartStore = useCartStore()
+  const { addAlert } = useAlertsStore()
 
   const router = useRouter()
 
@@ -227,9 +227,8 @@
       session,
       onPaymentCompleted: async (result: any) => {
         if (result.resultCode === 'Authorised') {
-          cartStore.$reset()
-          getStorage().removeItem('camp_cart')
-          await router.push('/')
+          await cartStore.placeOrder()
+          router.push('/order/success?orderId=' + cartStore.orderId)
         }
       },
       onPaymentFailed: (result: any, component: any) => {
@@ -260,7 +259,7 @@
     try {
       if (!cartStore.address) {
         addAlert({
-          type: 'error',
+          type: ALERT_TYPE.ERROR,
           message: 'Please add a shipping address',
         })
       }
@@ -281,7 +280,7 @@
     await cartStore.setAddress(address)
 
     addAlert({
-      type: 'success',
+      type: ALERT_TYPE.SUCCESS,
       message: 'Shipping address updated successfully',
     })
   }

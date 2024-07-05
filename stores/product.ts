@@ -104,7 +104,7 @@ export default defineStore('product', {
         this.productsInfo.total = data.total ?? null
         this.productsInfo.products = data.results?.map(product => new ProductDTO(product)) || []
       } catch {
-        const data = await new Promise<ProductsGet200Response>(resolve => {
+        const data = await new Promise<ProductsGet200Response>((resolve) => {
           setTimeout(() => {
             resolve({
               ...(productsData as ProductsGet200Response),
