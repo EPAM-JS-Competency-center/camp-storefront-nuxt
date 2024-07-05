@@ -110,14 +110,15 @@
   import { clamp } from '@storefront-ui/shared'
   import { useCounter } from '@vueuse/core'
   import type { CartLineItemsInner, ProductAttribute } from '~/types/interfaces'
-  import { useCart, useAlerts } from '@/stores'
+  import { useCartStore, useAlertsStore } from '@/stores'
+  import { ALERT_TYPE } from '~/types/enums'
 
   const props = defineProps<{
     lineItem: CartLineItemsInner
   }>()
 
-  const cartStore = useCart()
-  const alerts = useAlerts()
+  const cartStore = useCartStore()
+  const alerts = useAlertsStore()
 
   const sizeName = computed(() => {
     const sizeAtribute = props.lineItem.variant?.attributes &&
@@ -169,11 +170,11 @@
 
   async function updateQuantity(newValue: number) {
     await cartStore.updateQuantity(props.lineItem, newValue)
-    alerts.addAlert({ message: 'Product quantity updated', type: 'success' })
+    alerts.addAlert({ message: 'Product quantity updated', type: ALERT_TYPE.SUCCESS })
   }
 
   async function removeItem() {
     await cartStore.removeLineItem(props.lineItem)
-    alerts.addAlert({ message: 'Product removed', type: 'success' })
+    alerts.addAlert({ message: 'Product removed', type: ALERT_TYPE.SUCCESS })
   }
 </script>

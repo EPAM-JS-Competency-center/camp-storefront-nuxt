@@ -105,14 +105,15 @@ import { clamp } from '@storefront-ui/shared'
 import { useCounter } from '@vueuse/core'
 import type ProductDTO from '~/DTO/Product'
 import { centsToDollars } from '~/utils/helpers'
-import { useCart, useAlerts } from '@/stores';
+import { useCartStore, useAlertsStore } from '@/stores'
+import { ALERT_TYPE } from '~/types/enums'
 
 const props = defineProps<{
   product: ProductDTO
 }>()
 
-const cart = useCart()
-const alerts = useAlerts()
+const cart = useCartStore()
+const alerts = useAlertsStore()
 const inputId = useId()
 const min = ref(1)
 const max = ref(999)
@@ -125,6 +126,6 @@ function handleOnChange(event: Event) {
 
 async function addToCart() {
   await cart.addProductToCart(props.product.masterVariant.sku, count.value)
-  alerts.addAlert({ message: 'Product added to cart', type: 'success' })
+  alerts.addAlert({ message: 'Product added to cart', type: ALERT_TYPE.SUCCESS })
 }
 </script>

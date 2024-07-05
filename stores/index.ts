@@ -1,9 +1,9 @@
 import useProductStore from '@/stores/product'
-import useAlerts from '@/stores/alerts'
-import useCart from '@/stores/cart'
+import useAlertsStore from '@/stores/alerts'
+import useCartStore from '@/stores/cart'
 
 export {
   useProductStore,
-  useAlerts,
-  useCart
+  useAlertsStore,
+  useCartStore
 }
