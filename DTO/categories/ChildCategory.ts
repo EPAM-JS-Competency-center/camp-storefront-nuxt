@@ -28,8 +28,11 @@ export default class CategoryDTO {
     this.name = rawCategory.name || ''
     this.slug = rawCategory.slug || ''
     this.description = rawCategory.description || ''
-    this.parent = rawCategory.ancestors?.length
-      ? new AncestorDTO(rawCategory.ancestors.at(-1) as Category)
+
+    const parentCategory = categories.find(cat => cat.id === rawCategory.parent?.id)
+
+    this.parent = parentCategory
+      ? new AncestorDTO(parentCategory as Category)
       : null
     this.ancestors = ancestors
     this.parentPath = parentPath || '/'
