@@ -70,7 +70,7 @@ export default defineStore('product', {
         })
 
         this.categoriesTree = new CategoryDTO(data)
-      } catch {
+       } catch {
         const data = await new Promise<Category[]>((resolve) => {
           setTimeout(() => {
             resolve(categoriesData)
@@ -130,6 +130,7 @@ export default defineStore('product', {
         })
 
         this.selectedProduct = new ProductDTO(data)
+        this.pdpIsMocked = false
       } catch {
         const data = await new Promise<Product>((resolve) => {
           setTimeout(() => {
