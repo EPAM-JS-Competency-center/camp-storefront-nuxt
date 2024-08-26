@@ -4,6 +4,11 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
+  runtimeConfig: {
+    public: {
+      ADYEN_CLIENT_KEY: process.env.ADYEN_CLIENT_KEY || '',
+    },
+  },
   app: {
     head: {
       viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
@@ -17,6 +22,10 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', href: '/icons/apple-touch-icon-180x180.png' },
+        {
+          rel: 'stylesheet',
+          href: 'https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/6.0.1/adyen.css',
+        },
       ],
     },
   },

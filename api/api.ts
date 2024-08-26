@@ -6,7 +6,7 @@ interface ApiRequestParams extends AxiosRequestConfig {
   pathParams?: Record<string, string | number>
 }
 
-const BASE_URL = import.meta.env.VITE_BFF_URL || 'http://localhost:3000/api/v1'
+const BASE_URL = import.meta.env.VITE_BFF_URL || 'http://localhost:3003/api/v1'
 
 const http = axios.create({
   baseURL: BASE_URL,
@@ -17,7 +17,7 @@ export default async function <T>(options: ApiRequestParams): Promise<AxiosRespo
     const { pathParams = {}, headers = {}, ...opts } = options
 
     if (pathParams) {
-      Object.keys(pathParams).forEach((param) => {
+      Object.keys(pathParams).forEach(param => {
         opts.url = opts.url.replace(param, pathParams[param] as string)
       })
     }
