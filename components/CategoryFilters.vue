@@ -1,39 +1,18 @@
 <template>
   <aside class="w-full md:max-w-[376px]">
-    <h5
-      class="py-2 px-4 mb-6 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md"
-      :class="{'pending-implementation': categoriesMocked}"
-    >
-      Category {{ categoryTitle }}
-    </h5>
+    <div v-if="productStore.selectedCategory">
+      <Breadcrumbs :selected-category="productStore.selectedCategory" />
+    </div>
     <div class="px-2"
       :class="{'pending-implementation': categoriesMocked}"
     >
       <BaseLoader v-show="isLoading" class="col-span-full" />
       <ul v-if="!isLoading && selectedCategory" class="mt-2 mb-6">
-        <li v-if="selectedCategory.parent">
-          <NuxtLink
-            :to="`/category${!selectedCategory.parent.parent ? '' : selectedCategory.parentPath}`"
-            @click="setParentCategory"
-          >
-            <SfListItem
-              size="sm"
-              tag="div"
-              class="first-of-type:mt-2 rounded-md active:bg-primary-100"
-            >
-              <template #suffix>
-                <SfIconCheck size="xs" class="text-primary-700" />
-              </template>
-              <span class="flex items-center"> Back to {{ selectedCategory.parent.name }} </span>
-            </SfListItem>
-          </NuxtLink>
-        </li>
-
         <li
-          v-for="(childCategory, index) in selectedCategory.childCategories"
+          v-for="(childCategory, index) in selectedCategory.children"
           :key="childCategory.id"
         >
-          <NuxtLink :to="`/category${childCategory.path}`" @click="selectCategory(childCategory)">
+          <NuxtLink :to="childCategory.path" @click="selectCategory(childCategory)">
             <SfListItem
               size="sm"
               tag="div"
@@ -72,7 +51,7 @@
     <ul class="flex flex-col gap-2">
       <!-- prettier-ignore-attribute -->
       <li
-        v-for="{ id: filterDataId, type, summary, details }, index in filtersData"
+        v-for="({ id: filterDataId, type, summary, details }, index) in filtersData"
         :key="filterDataId"
       >
         <SfAccordionItem v-model="opened[index]">
@@ -149,7 +128,7 @@
     SfThumbnail,
   } from '@storefront-ui/vue'
   import { useProductStore } from '@/stores'
-  import CategoryDTO from '~/DTO/categories/ChildCategory'
+  import type CategoryTree from '~/DTO/categories/CategoriesTree'
 
   defineProps<{
     isLoading: boolean
@@ -174,21 +153,11 @@
 
   const selectedCategory = computed(() => productStore.selectedCategory)
 
-  const categoryTitle = computed(() =>
-    selectedCategory.value ? `: ${selectedCategory.value.name}` : '',
-  )
-
   // This is to indicate if categories data source is still using mocked data
   const categoriesMocked = computed(() => productStore.categoriesMocked)
 
-  const selectCategory = (category: CategoryDTO) => {
+  const selectCategory = (category: CategoryTree) => {
     productStore.selectedCategory = category
-  }
-
-  const setParentCategory = () => {
-    const slugs = selectedCategory.value?.parentPath.split('/')
-
-    productStore.setActiveCategoryByPath(slugs)
   }
 
   const filtersData = ref<Node[]>([

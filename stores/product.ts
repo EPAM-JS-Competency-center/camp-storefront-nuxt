@@ -1,18 +1,11 @@
 import { defineStore } from 'pinia'
-import type { Category, Product, ProductsGet200Response } from '~/types/interfaces'
+import type { Product, ProductsGet200Response } from '~/types/interfaces'
+import type { Category as C } from '~/types/api/bff/v1/categories.types'
 import api from '~/api/api'
 import ProductDTO from '~/DTO/Product'
 import { MAX_PAGE_PRODUCTS_COUNT, START_PAGE_NUMBER } from '~/utils/constants'
-// import CategoriesTreeDTO from '~/DTO/categories/CategoriesTree'
-import CategoryDTO from '~/DTO/categories/ChildCategory'
-
-// Remove this when you start implementing the API
-// 1 /api/v1/categories
-import categoriesData from '@/mock_data/categories.json'
-// 2 /api/v1/products
-import productsData from '@/mock_data/products.json'
-// 2 /api/v1/products/{sku}
 import singleProductData from '@/mock_data/product.json'
+import CategoryTree from '~/DTO/categories/CategoriesTree'
 
 interface State {
   productsInfo: {
@@ -20,8 +13,8 @@ interface State {
     products: ProductDTO[]
   }
   selectedProduct: ProductDTO | null
-  categoriesTree: CategoryDTO | null
-  selectedCategory: CategoryDTO | null
+  categoriesTree: CategoryTree | null
+  selectedCategory: CategoryTree | null
   defaultCategoryId?: number | string
   categoriesMocked: boolean
   productsMocked: boolean
@@ -49,73 +42,46 @@ export default defineStore('product', {
         return
       }
 
-      const filteredSlugs = slugs.filter(slug => slug !== this.categoriesTree?.slug)
+      const getSelectedCategory = (category: CategoryTree, slugs: string[]): CategoryTree | undefined => {
+        const [left, ...right] = slugs
 
-      if (!filteredSlugs.length) {
-        this.selectedCategory = this.categoriesTree
-      } else {
-        this.selectedCategory = filteredSlugs.reduce((acc: null | CategoryDTO, slug) => {
-          const categoryToResearch = acc ?? (this.categoriesTree as CategoryDTO)
-          acc = categoryToResearch.childCategories.find(category => category.slug === slug) || null
+        let subTree
+        if (left) {
+          subTree = category.children?.find(({ id }) => id === left)
+        }
 
-          return acc
-        }, null)
+        if (subTree && right.length) {
+          return getSelectedCategory(subTree, right)
+        }
+        return subTree
       }
+
+      this.selectedCategory = getSelectedCategory(this.categoriesTree, slugs) || this.categoriesTree
     },
     async getCategories(): Promise<void> {
-      try {
-        const { data } = await api<Category[]>({
+        const { data } = await api<C>({
           url: '/categories',
           method: 'get',
         })
 
-        this.categoriesTree = new CategoryDTO(data)
-      } catch {
-        const data = await new Promise<Category[]>((resolve) => {
-          setTimeout(() => {
-            resolve(categoriesData)
-          }, 1000)
-        })
-
-        this.categoriesTree = new CategoryDTO(data)
-        this.categoriesMocked = true
-      }
-
-      // set default category if exists
-      if (this.categoriesTree) {
-        this.defaultCategoryId = this.categoriesTree.id
-      }
+        this.categoriesTree = new CategoryTree(data)
     },
 
     async getCategoryProducts(categoryID?: string | number, page?: number | string) {
-      try {
-        this.productsInfo.total = null
+      this.productsInfo.total = null
 
-        const { data } = await api<ProductsGet200Response>({
-          url: '/products',
-          method: 'get',
-          params: {
-            categoryId: categoryID ?? this.defaultCategoryId,
-            offset: page ?? START_PAGE_NUMBER,
-            limit: MAX_PAGE_PRODUCTS_COUNT,
-          },
-        })
+      const { data } = await api<ProductsGet200Response>({
+        url: '/products',
+        method: 'get',
+        params: {
+          categoryId: categoryID ?? this.defaultCategoryId,
+          offset: page ?? START_PAGE_NUMBER,
+          limit: MAX_PAGE_PRODUCTS_COUNT,
+        },
+      })
 
-        this.productsInfo.total = data.total ?? null
-        this.productsInfo.products = data.results?.map(product => new ProductDTO(product)) || []
-      } catch {
-        const data = await new Promise<ProductsGet200Response>(resolve => {
-          setTimeout(() => {
-            resolve({
-              ...(productsData as ProductsGet200Response),
-            })
-          }, 1000)
-        })
-
-        this.productsInfo.total = data.total ?? null
-        this.productsInfo.products = data.results?.map(product => new ProductDTO(product)) || []
-        this.productsMocked = true
-      }
+      this.productsInfo.total = data.total ?? null
+      this.productsInfo.products = data.results?.map(product => new ProductDTO(product)) || []
     },
 
     async getProduct(sku: string) {
