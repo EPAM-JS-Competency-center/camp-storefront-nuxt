@@ -52,9 +52,9 @@
 <script setup lang="ts">
 import { SfIconMenu, SfIconShoppingCart, SfBadge } from '@storefront-ui/vue'
 import SfButtonLink from '~/components/base/SfButtonLink.vue'
-import { useCart } from '@/stores'
+import { useCartStore } from '@/stores'
 
-const cart = useCart()
+const cart = useCartStore()
 const cartContent = computed(() => cart.cart.lineItems?.length || 0)
 
 cart.loadCart()

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
+import type { AxiosResponse } from 'axios'
 import api from '~/api/api'
 import type { Address, Cart, CartLineItemsInner } from '~/types/interfaces'
 import { getStorage } from '~/utils/localStorage'
 import * as mockedCart from '~/utils/mockedCartApi'
-import type { AxiosResponse } from 'axios'
 
 interface State {
   cart: Cart
@@ -19,13 +19,13 @@ export default defineStore('cart', {
     },
   }),
   actions: {
-    loadCart(): void {
+    async loadCart(): Promise<void> {
       if (getStorage().getItem('camp_cart')) {
         this.cart = JSON.parse(getStorage().getItem('camp_cart') as string)
         // Refresh cart from server
-        this.loadById(this.cart.id as string)
+        await this.loadById(this.cart.id as string)
       } else {
-        this.createNewCart()
+        await this.createNewCart()
       }
 
       // Load the cart from the server
@@ -39,8 +39,8 @@ export default defineStore('cart', {
 
         this.cart = response.data
       } catch (error) {
-        // TBD, make a error message
-        // Throw a error message
+        // TBD, make an error message
+        // Throw an error message
         console.error(error)
 
         console.info('Error creating a new cart. Falling back to mocked cart')
@@ -58,8 +58,8 @@ export default defineStore('cart', {
 
         this.cart = response.data
       } catch (error) {
-        // TBD, make a error message
-        // Throw a error message
+        // TBD, make an error message
+        // Throw an error message
         console.error(error)
 
         console.info('Error loading cart. Falling back to mocked cart')
@@ -68,13 +68,72 @@ export default defineStore('cart', {
 
       this.cacheCart()
     },
+    async setPromoCodeToCart(promoCode: string = ''): Promise<void> {
+      try {
+        const response = await api<Cart>({
+          url: `/carts/${this.cart.id}`,
+          method: 'put',
+          data: {
+            version: this.cart.version,
+            action: 'AddDiscountCode',
+            AddDiscountCode: {
+              code: promoCode,
+            },
+          },
+        })
+
+        this.cart = response.data
+      } catch (error) {
+        console.error(error)
+
+        console.info('Error loading cart. Falling back to mocked cart')
+        this.cart = mockedCart.loadById(this.cart.id as string)
+        throw error
+      }
+
+      this.cacheCart()
+    },
+
+    // @todo finish
+    async removePromoCodeFromCart(): Promise<void> {
+      const discountCode = this.cart.discountCodes?.[0].discountCode
+
+      if (!discountCode) {
+        return Promise.reject(new Error('No promo code to remove'))
+      }
+
+      try {
+        const response = await api<Cart>({
+          url: `/carts/${this.cart.id}`,
+          method: 'put',
+          data: {
+            version: this.cart.version,
+            action: 'RemoveDiscountCode',
+            RemoveDiscountCode: {
+              ...discountCode
+            },
+          },
+        })
+
+        this.cart = response.data
+      } catch (error) {
+        console.error(error)
+
+        console.info('Error loading cart. Falling back to mocked cart')
+        this.cart = mockedCart.loadById(this.cart.id as string)
+        throw error
+      }
+
+      this.cacheCart()
+    },
+
     async addProductToCart(productSKU: string, quantity: number): Promise<void> {
       try {
         await api<Cart>({
           url: `/carts/${this.cart.id}`,
           method: 'put',
           data: {
-            version: (this.cart.version || 0) + 1,
+            version: this.cart.version,
             action: 'AddLineItem',
             AddLineItem: {
               variantId: productSKU,
@@ -102,7 +161,7 @@ export default defineStore('cart', {
           url: `/carts/${this.cart.id}`,
           method: 'put',
           data: {
-            version: (this.cart.version || 0) + 1,
+            version: this.cart.version,
             action: 'ChangeLineItemQuantity',
             ChangeLineItemQuantity: {
               lineItemId: lineItem.id,
@@ -130,7 +189,7 @@ export default defineStore('cart', {
           url: `/carts/${this.cart.id}`,
           method: 'put',
           data: {
-            version: (this.cart.version || 0) + 1,
+            version: this.cart.version,
             action: 'RemoveLineItem',
             RemoveLineItem: {
               lineItemId: lineItem.id,
@@ -159,7 +218,7 @@ export default defineStore('cart', {
           url: `/carts/${this.cart.id}`,
           method: 'put',
           data: {
-            version: (this.cart.version || 0) + 1,
+            version: this.cart.version,
             action: 'SetShippingAddress',
             SetShippingAddress: address,
           },
@@ -210,6 +269,16 @@ export default defineStore('cart', {
 
     clearCart(): void {
       getStorage().removeItem('camp_cart')
+    },
+
+    checkPromoCode(promoCode: string): Promise<AxiosResponse> {
+      return api({
+        url: '/discount-codes',
+        method: 'get',
+        params: {
+          code: promoCode,
+        },
+      })
     },
 
     createPaymentSession(amount: number) {

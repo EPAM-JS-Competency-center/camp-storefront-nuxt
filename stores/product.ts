@@ -70,7 +70,7 @@ export default defineStore('product', {
         })
 
         this.categoriesTree = new CategoryDTO(data)
-      } catch {
+       } catch {
         const data = await new Promise<Category[]>((resolve) => {
           setTimeout(() => {
             resolve(categoriesData)
@@ -104,7 +104,7 @@ export default defineStore('product', {
         this.productsInfo.total = data.total ?? null
         this.productsInfo.products = data.results?.map(product => new ProductDTO(product)) || []
       } catch {
-        const data = await new Promise<ProductsGet200Response>(resolve => {
+        const data = await new Promise<ProductsGet200Response>((resolve) => {
           setTimeout(() => {
             resolve({
               ...(productsData as ProductsGet200Response),
@@ -130,6 +130,7 @@ export default defineStore('product', {
         })
 
         this.selectedProduct = new ProductDTO(data)
+        this.pdpIsMocked = false
       } catch {
         const data = await new Promise<Product>((resolve) => {
           setTimeout(() => {

@@ -7,7 +7,10 @@ export default class CategoryDTO {
   description: string
   childCategories: string[]
   ancestors: CategoryDTO[]
-  parent: string | null
+  parent?: {
+    id: string
+    name: string
+  } | null
 
   constructor(category: Category, categories: Category[] = []) {
     this.id = category.id || ''
@@ -18,7 +21,9 @@ export default class CategoryDTO {
       (category.ancestors && category.ancestors.map((ancestor) => {
         return new CategoryDTO(categories.find(category => category.id === ancestor.id) as Category, categories)
       })) || []
-    this.parent = category.parent?.id ?? null
+
+    const parentCategory = categories.find(cat => cat.id === category.parent?.id)
+    this.parent = parentCategory ? { id: String(parentCategory.id), name: String(parentCategory.name) } : null
 
     this.childCategories = categories.reduce((acc, categoryToReduce) => {
       if (categoryToReduce.parent?.id === category.id && categoryToReduce.id) {

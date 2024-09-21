@@ -278,6 +278,21 @@ export interface CartTotalPrice {
   centAmount?: number
 }
 
+export interface OrderTotalPrice {
+  /**
+   *
+   * @type {string}
+   * @memberof OrderTotalPrice
+   */
+  currencyCode?: string
+  /**
+   *
+   * @type {number}
+   * @memberof OrderTotalPrice
+   */
+  centAmount?: number
+}
+
 export interface CartLineItemsInner {
   /**
    *
@@ -309,6 +324,56 @@ export interface CartLineItemsInner {
    * @memberof CartLineItemsInner
    */
   currencyCode?: string
+}
+
+export interface DiscountCode {
+  /**
+   * Discount Code Information
+   * @type {Record<string, string>}
+   * @memberof DiscountCode
+   */
+  discountCode?: {
+      typeId: string,
+      id: string
+  },
+  /**
+   * State of the Discount Code
+   * @type {string}
+   * @memberof DiscountCode
+   */
+  state?: string
+}
+
+export interface DiscountOnTotalPrice {
+  /**
+   * Discounted Amount Information
+   * @type {Record<string, string>}
+   * @memberof DiscountOnTotalPrice
+   */
+  discountedAmount?: {
+      type?: string,
+      currencyCode?: string,
+      centAmount?: number,
+      fractionDigits?: number
+  },
+
+  /**
+   * Array of included Discounts
+   * @type {Array}
+   * @memberof DiscountOnTotalPrice
+   */
+  includedDiscounts?: {
+    discount?: {
+        typeId?: string,
+        id?: string
+    },
+    discountedAmount?: {
+        type?: string,
+        currencyCode?: string,
+        centAmount?: number,
+        fractionDigits?: number
+    }
+  }[]
 }
 
 export interface Cart {
@@ -348,6 +413,19 @@ export interface Cart {
    * @memberof Cart
    */
   totalQuantity?: number
+
+  /**
+   *
+   * @type {Array<DiscountCode>}
+   * @memberof Cart
+   */
+  discountCodes?: DiscountCode[]
+
+  /**
+   * @type {DiscountOnTotalPrice}
+   * @memberof Cart
+   */
+  discountOnTotalPrice?: DiscountOnTotalPrice
 }
 
 export interface ChangeLineItemQuantity {
@@ -578,21 +656,6 @@ export interface OrdersIdPutRequest {
    * @memberof OrdersIdPutRequest
    */
   updateAction?: OrdersIdPutRequestUpdateAction
-}
-
-export interface OrderTotalPrice {
-  /**
-   *
-   * @type {string}
-   * @memberof OrderTotalPrice
-   */
-  currencyCode?: string
-  /**
-   *
-   * @type {number}
-   * @memberof OrderTotalPrice
-   */
-  centAmount?: number
 }
 
 export interface OrderCart {
